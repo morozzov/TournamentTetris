@@ -121,6 +121,9 @@ public class TetrisClient extends Application {
                     case UP:
                         MoveTurn(form);
                         break;
+                    case SPACE:
+                        // TODO: Drop logic
+                        break;
                 }
             }
         });

@@ -44,21 +44,6 @@ public class Controller {
         }
     }
 
-//    public static char historyRandomizer() {
-//        char[] pieces = {'j', 'l', 'o', 's', 't', 'z', 'i'};
-//        char history;
-//        while (true) {
-//            // First "roll"
-//            char piece = pieces[(int) (Math.random() * pieces.length)];
-//            // Roll is checked against the history
-//            if (piece == history) {
-//                piece = pieces[Math.floor(Math.random() * pieces.length)];
-//            }
-//            history = piece;
-//            yield piece;
-//        }
-//    }
-
     public static Form makeRect(char history, Random random) {
         char[] pieces = {'j', 'l', 'o', 's', 't', 'z', 'i'};
         char piece;
