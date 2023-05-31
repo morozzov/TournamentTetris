@@ -13,14 +13,13 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Timer;
-import java.util.TimerTask;
+import java.util.*;
 
 public class TetrisClient extends Application {
 
     // The variables
+    public static Random random = new Random(123); // TODO: seed from server
+    public static char history = '-';
     public static final int MOVE = 25;
     public static final int SIZE = 25;
     public static int XMAX = SIZE * 12;
@@ -32,7 +31,7 @@ public class TetrisClient extends Application {
     public static int score = 0;
     private static int top = 0;
     private static boolean game = true;
-    private static Form nextObj = Controller.makeRect();
+    private static Form nextObj = Controller.makeRect(history, random);
     private static int linesNo = 0;
 
     public static void main(String[] args) {
@@ -61,7 +60,7 @@ public class TetrisClient extends Application {
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
         moveOnKeyPress(a);
         object = a;
-        nextObj = Controller.makeRect();
+        nextObj = Controller.makeRect(history,random);
         stage.setScene(scene);
         stage.setTitle("T E T R I S");
         stage.show();
@@ -504,7 +503,7 @@ public class TetrisClient extends Application {
             RemoveRows(group);
 
             Form a = nextObj;
-            nextObj = Controller.makeRect();
+            nextObj = Controller.makeRect(history, random);
             object = a;
             group.getChildren().addAll(a.a, a.b, a.c, a.d);
             moveOnKeyPress(a);
