@@ -437,6 +437,17 @@ public class TetrisClient extends Application {
             full = 0;
         }
         if (lines.size() > 0)
+            switch (lines.size()) {
+            // TODO: Scores by lines count
+                case 1:
+                    break;
+                case 2:
+                    break;
+                case 3:
+                    break;
+                case 4:
+                    break;
+            }
             do {
                 for (Node node : pane.getChildren()) {
                     if (node instanceof Rectangle)
