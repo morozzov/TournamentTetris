@@ -60,7 +60,7 @@ public class TetrisClient extends Application {
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
         moveOnKeyPress(a);
         object = a;
-        nextObj = Controller.makeRect(history,random);
+        nextObj = Controller.makeRect(history, random);
         stage.setScene(scene);
         stage.setTitle("T E T R I S");
         stage.show();
@@ -122,7 +122,11 @@ public class TetrisClient extends Application {
                         MoveTurn(form);
                         break;
                     case SPACE:
-                        // TODO: Drop logic
+                        try {
+                            MoveDrop(form);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                         break;
                 }
             }
@@ -478,7 +482,6 @@ public class TetrisClient extends Application {
     private void MoveDown(Rectangle rect) {
         if (rect.getY() + MOVE < YMAX)
             rect.setY(rect.getY() + MOVE);
-
     }
 
     private void MoveRight(Rectangle rect) {
@@ -496,7 +499,9 @@ public class TetrisClient extends Application {
             rect.setY(rect.getY() - MOVE);
     }
 
-    private void MoveDown(Form form) {
+    private boolean MoveDown(Form form) {
+        boolean result = false;
+
         if (form.a.getY() == YMAX - SIZE || form.b.getY() == YMAX - SIZE || form.c.getY() == YMAX - SIZE
                 || form.d.getY() == YMAX - SIZE || moveA(form) || moveB(form) || moveC(form) || moveD(form)) {
             MESH[(int) form.a.getX() / SIZE][(int) form.a.getY() / SIZE] = 1;
@@ -510,6 +515,8 @@ public class TetrisClient extends Application {
             object = a;
             group.getChildren().addAll(a.a, a.b, a.c, a.d);
             moveOnKeyPress(a);
+
+            result = true;
         }
 
         if (form.a.getY() + MOVE < YMAX && form.b.getY() + MOVE < YMAX && form.c.getY() + MOVE < YMAX
@@ -524,6 +531,15 @@ public class TetrisClient extends Application {
                 form.c.setY(form.c.getY() + MOVE);
                 form.d.setY(form.d.getY() + MOVE);
             }
+        }
+
+        return result;
+    }
+
+
+    private void MoveDrop(Form form) throws InterruptedException {
+        while (!MoveDown(form)) {
+            score++;
         }
     }
 
