@@ -44,7 +44,20 @@ public class TetrisClient extends Application {
             Arrays.fill(a, 0);
         }
 
-        Line line = new Line(XMAX, 0, XMAX, YMAX);
+        for (int i = 1; i <= 12; i++) {
+            Line line = new Line(SIZE * i, 0, SIZE * i, YMAX);
+            line.setStroke(Color.CADETBLUE);
+            if (i==12){
+                line.setStroke(Color.DARKSLATEBLUE);
+            }
+            group.getChildren().add(line);
+        }
+        for (int i = 1; i <= 24; i++) {
+            Line line = new Line(0, SIZE * i, XMAX, SIZE * i);
+            line.setStroke(Color.CADETBLUE);
+            group.getChildren().add(line);
+        }
+
         Text scoretext = new Text("Score: ");
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
@@ -54,7 +67,7 @@ public class TetrisClient extends Application {
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
-        group.getChildren().addAll(scoretext, line, level);
+        group.getChildren().addAll(scoretext, level);
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -122,11 +135,7 @@ public class TetrisClient extends Application {
                         MoveTurn(form);
                         break;
                     case SPACE:
-                        try {
-                            MoveDrop(form);
-                        } catch (InterruptedException e) {
-                            throw new RuntimeException(e);
-                        }
+                        MoveDrop(form);
                         break;
                 }
             }
@@ -437,17 +446,17 @@ public class TetrisClient extends Application {
             full = 0;
         }
         if (lines.size() > 0)
-            switch (lines.size()) {
-            // TODO: Scores by lines count
-                case 1:
-                    break;
-                case 2:
-                    break;
-                case 3:
-                    break;
-                case 4:
-                    break;
-            }
+//            switch (lines.size()) {
+//            // TODO: Scores by lines count
+//                case 1:
+//                    break;
+//                case 2:
+//                    break;
+//                case 3:
+//                    break;
+//                case 4:
+//                    break;
+//            }
             do {
                 for (Node node : pane.getChildren()) {
                     if (node instanceof Rectangle)
@@ -548,7 +557,7 @@ public class TetrisClient extends Application {
     }
 
 
-    private void MoveDrop(Form form) throws InterruptedException {
+    private void MoveDrop(Form form) {
         while (!MoveDown(form)) {
             score++;
         }
