@@ -58,11 +58,11 @@ public class TetrisClient extends Application {
             group.getChildren().add(line);
         }
 
-        Text scoretext = new Text("Score: ");
+        Text scoretext = new Text("Очки: ");
         scoretext.setStyle("-fx-font: 20 arial;");
         scoretext.setY(50);
         scoretext.setX(XMAX + 5);
-        Text level = new Text("Lines: ");
+        Text level = new Text("Линии: ");
         level.setStyle("-fx-font: 20 arial;");
         level.setY(100);
         level.setX(XMAX + 5);
@@ -75,7 +75,7 @@ public class TetrisClient extends Application {
         object = a;
         nextObj = Controller.makeRect(history, random);
         stage.setScene(scene);
-        stage.setTitle("T E T R I S");
+        stage.setTitle("Т Е Т Р И С");
         stage.show();
 
         Timer fall = new Timer();
@@ -91,9 +91,9 @@ public class TetrisClient extends Application {
 
                         if (top == 2) {
                             // GAME OVER
-                            Text over = new Text("GAME OVER");
-                            over.setFill(Color.RED);
-                            over.setStyle("-fx-font: 70 arial;");
+                            Text over = new Text("ИГРА ЗАКОНЧЕНА");
+                            over.setFill(Color.DARKRED);
+                            over.setStyle("-fx-font: 40 arial;");
                             over.setY(250);
                             over.setX(10);
                             group.getChildren().add(over);
@@ -106,8 +106,8 @@ public class TetrisClient extends Application {
 
                         if (game) {
                             MoveDown(object);
-                            scoretext.setText("Score: " + Integer.toString(score));
-                            level.setText("Lines: " + Integer.toString(linesNo));
+                            scoretext.setText("Очки: " + Integer.toString(score));
+                            level.setText("Линии: " + Integer.toString(linesNo));
                         }
                     }
                 });
