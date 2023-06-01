@@ -13,6 +13,10 @@ import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
 
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.OutputStream;
+import java.net.Socket;
 import java.util.*;
 
 public class TetrisClient extends Application {
@@ -34,8 +38,32 @@ public class TetrisClient extends Application {
     private static Form nextObj = Controller.makeRect(history, random);
     private static int linesNo = 0;
 
-    public static void main(String[] args) {
-        launch(args);
+    public static void main(String[] args) throws IOException {
+        Socket socket = new Socket("127.0.0.1", 1024);
+        InputStream inputStream = socket.getInputStream();
+
+        while (true) {
+            try {
+                if (inputStream.available() > 0) {
+                    int d = 0;
+                    String msg = "";
+                    while ((d = inputStream.read()) != 38) {
+                        msg = msg + (char) d;
+                    }
+                    System.out.println(msg);
+
+                    random = new Random(Long.parseLong(msg));
+                    nextObj = Controller.makeRect(history, random);
+                    launch(args);
+
+                    if (msg.equals("Exit")) System.exit(0);
+                    System.out.println(msg);
+                    break;
+                }
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
     }
 
     @Override
@@ -67,7 +95,11 @@ public class TetrisClient extends Application {
         level.setY(100);
         level.setX(XMAX + 5);
         level.setFill(Color.GREEN);
-        group.getChildren().addAll(scoretext, level);
+        Text nextObjString = new Text(nextObj.getName());
+        nextObjString.setStyle("-fx-font: 20 arial;");
+        nextObjString.setY(150);
+        nextObjString.setX(XMAX + 5);
+        group.getChildren().addAll(scoretext, level, nextObjString);
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -77,6 +109,30 @@ public class TetrisClient extends Application {
         stage.setScene(scene);
         stage.setTitle("Т Е Т Р И С");
         stage.show();
+
+        Socket socket = new Socket("127.0.0.1", 1024);
+        OutputStream outputStream = socket.getOutputStream();
+        Thread write = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                Scanner sc = new Scanner(System.in);
+                while (true) {
+                    String msg = String.valueOf(score);
+                    try {
+                        outputStream.write((msg + "&").getBytes());
+                        outputStream.flush();
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                    try {
+                        Thread.sleep(100);
+                    } catch (InterruptedException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
+        write.start();
 
         Timer fall = new Timer();
         TimerTask task = new TimerTask() {
@@ -95,7 +151,7 @@ public class TetrisClient extends Application {
                             over.setFill(Color.DARKRED);
                             over.setStyle("-fx-font: 40 arial;");
                             over.setY(250);
-                            over.setX(10);
+                            over.setX(30);
                             group.getChildren().add(over);
                             game = false;
                         }
@@ -106,6 +162,8 @@ public class TetrisClient extends Application {
 
                         if (game) {
                             MoveDown(object);
+                            nextObjString.setFill(nextObj.color);
+                            nextObjString.setText("Следующая: " + nextObj.getName().toUpperCase());
                             scoretext.setText("Очки: " + Integer.toString(score));
                             level.setText("Линии: " + Integer.toString(linesNo));
                         }
