@@ -47,7 +47,7 @@ public class TetrisClient extends Application {
         for (int i = 1; i <= 12; i++) {
             Line line = new Line(SIZE * i, 0, SIZE * i, YMAX);
             line.setStroke(Color.CADETBLUE);
-            if (i==12){
+            if (i == 12) {
                 line.setStroke(Color.DARKSLATEBLUE);
             }
             group.getChildren().add(line);
@@ -558,8 +558,10 @@ public class TetrisClient extends Application {
 
 
     private void MoveDrop(Form form) {
-        while (!MoveDown(form)) {
-            score++;
+        if (form.a.getY() > SIZE && form.b.getY() > SIZE && form.c.getY() > SIZE && form.d.getY() > SIZE) {
+            while (!MoveDown(form)) {
+                score++;
+            }
         }
     }
 
