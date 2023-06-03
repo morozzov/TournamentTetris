@@ -99,7 +99,12 @@ public class TetrisClient extends Application {
         nextObjString.setStyle("-fx-font: 20 arial;");
         nextObjString.setY(150);
         nextObjString.setX(XMAX + 5);
-        group.getChildren().addAll(scoretext, level, nextObjString);
+        Text rival = new Text("-");
+        rival.setStyle("-fx-font: 20 arial;");
+        rival.setY(200);
+        rival.setX(XMAX + 5);
+        rival.setFill(Color.DARKRED);
+        group.getChildren().addAll(scoretext, level, nextObjString, rival);
 
         Form a = nextObj;
         group.getChildren().addAll(a.a, a.b, a.c, a.d);
@@ -112,6 +117,8 @@ public class TetrisClient extends Application {
 
         Socket socket = new Socket("127.0.0.1", 1024);
         OutputStream outputStream = socket.getOutputStream();
+        InputStream inputStream = socket.getInputStream();
+
         Thread write = new Thread(new Runnable() {
             @Override
             public void run() {
@@ -133,6 +140,29 @@ public class TetrisClient extends Application {
             }
         });
         write.start();
+
+        Thread read = new Thread(new Runnable() {
+            @Override
+            public void run() {
+                while (true) {
+                    try {
+                        if (inputStream.available() > 0) {
+                            int d = 0;
+                            String msg = "";
+                            while ((d = inputStream.read()) != 38) {
+                                msg = msg + (char) d;
+                            }
+                            if (msg.equals("Exit")) System.exit(0);
+                            rival.setText("Соперник: " + msg);
+                        }
+                    } catch (IOException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }
+        });
+        read.start();
+
 
         Timer fall = new Timer();
         TimerTask task = new TimerTask() {

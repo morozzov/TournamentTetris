@@ -40,8 +40,11 @@ public class Main {
         while (true) {
             String fromClient1 = client1.read();
             String fromClient2 = client2.read();
-            System.out.println("Client1: "+fromClient1);
-            System.out.println("Client2: "+fromClient2);
+
+            client1.write(fromClient2);
+            client2.write(fromClient1);
+//            System.out.println("Client1: "+fromClient1);
+//            System.out.println("Client2: "+fromClient2);
         }
     }
 }
