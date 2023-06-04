@@ -37,6 +37,7 @@ public class Main {
         System.out.println("Client 2 joined");
         client2 = new Client(socket);
 
+        //TODO: Name from clients
         while (true) {
             String fromClient1 = client1.read();
             String fromClient2 = client2.read();

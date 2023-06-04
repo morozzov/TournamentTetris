@@ -16,9 +16,10 @@ public class Client {
         inputStream = socket.getInputStream();
         outputStream = socket.getOutputStream();
 
+        //TODO: Name from clients
 //        write("Enter your name: ");
 //        name = read();
-        System.out.println(name);
+//        System.out.println(name);
     }
 
     public String read() {
