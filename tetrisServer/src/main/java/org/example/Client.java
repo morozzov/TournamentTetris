@@ -18,8 +18,8 @@ public class Client {
 
         //TODO: Name from clients
 //        write("Enter your name: ");
-//        name = read();
-//        System.out.println(name);
+        name = read();
+        System.out.println(name);
     }
 
     public String read() {

@@ -3,15 +3,22 @@ package com.example.tetrisclient;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.event.EventHandler;
+import javafx.geometry.Orientation;
+import javafx.scene.Group;
 import javafx.scene.Scene;
+import javafx.scene.control.*;
 import javafx.scene.input.KeyEvent;
+import javafx.scene.layout.FlowPane;
+import javafx.scene.layout.GridPane;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Line;
 import javafx.scene.shape.Rectangle;
+import javafx.scene.text.Font;
 import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import javafx.scene.Node;
+import javafx.stage.StageStyle;
 
 import java.io.IOException;
 import java.io.InputStream;
@@ -39,8 +46,48 @@ public class TetrisClient extends Application {
     private static int linesNo = 0;
 
     public static void main(String[] args) throws IOException {
+//        Socket socket = new Socket("127.0.0.1", 1024);
+//        InputStream inputStream = socket.getInputStream();
+//
+//        while (true) {
+//            try {
+//                if (inputStream.available() > 0) {
+//                    int d = 0;
+//                    String msg = "";
+//                    while ((d = inputStream.read()) != 38) {
+//                        msg = msg + (char) d;
+//                    }
+//                    System.out.println(msg);
+//
+//                    random = new Random(Long.parseLong(msg));
+//                    nextObj = Controller.makeRect(history, random);
+//                    launch(args);
+//
+//                    if (msg.equals("Exit")) System.exit(0);
+//                    System.out.println(msg);
+//                    break;
+//                }
+//            } catch (IOException e) {
+//                e.printStackTrace();
+//            }
+//        }
+
+        launch(args);
+    }
+
+    @Override
+    public void start(Stage stage) throws Exception {
         Socket socket = new Socket("127.0.0.1", 1024);
+        OutputStream outputStream = socket.getOutputStream();
         InputStream inputStream = socket.getInputStream();
+
+        TextInputDialog textInputDialog = new TextInputDialog();
+        textInputDialog.setTitle("Авторизация");
+        textInputDialog.setHeaderText("Введите свой никнейм:");
+        textInputDialog.setContentText("Никнейм:");
+
+        Optional<String> nickName = textInputDialog.showAndWait();
+        outputStream.write((nickName + "&").getBytes());
 
         while (true) {
             try {
@@ -54,7 +101,6 @@ public class TetrisClient extends Application {
 
                     random = new Random(Long.parseLong(msg));
                     nextObj = Controller.makeRect(history, random);
-                    launch(args);
 
                     if (msg.equals("Exit")) System.exit(0);
                     System.out.println(msg);
@@ -64,10 +110,7 @@ public class TetrisClient extends Application {
                 e.printStackTrace();
             }
         }
-    }
-
-    @Override
-    public void start(Stage stage) throws Exception {
+        
         for (int[] a : MESH) {
             Arrays.fill(a, 0);
         }
@@ -115,9 +158,7 @@ public class TetrisClient extends Application {
         stage.setTitle("Т Е Т Р И С");
         stage.show();
 
-        Socket socket = new Socket("127.0.0.1", 1024);
-        OutputStream outputStream = socket.getOutputStream();
-        InputStream inputStream = socket.getInputStream();
+
 
         Thread write = new Thread(new Runnable() {
             @Override
@@ -201,6 +242,7 @@ public class TetrisClient extends Application {
                 });
             }
         };
+
         fall.schedule(task, 0, 300);
     }
 
