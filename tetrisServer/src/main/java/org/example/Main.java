@@ -38,7 +38,7 @@ public class Main {
         client2.write(String.valueOf(seed));
 
 
-        //TODO: Name from clients
+
 
         boolean client1Alive = true;
         boolean client2Alive = true;
