@@ -23,7 +23,7 @@ import java.util.*;
 public class TetrisClient extends Application {
 
     // The variables
-    public static Random random = new Random(123); // TODO: seed from server
+    public static Random random = new Random(123);
     public static char history = '-';
     public static final int MOVE = 25;
     public static final int SIZE = 25;
@@ -88,13 +88,11 @@ public class TetrisClient extends Application {
                     while ((d = inputStream.read()) != 38) {
                         msg = msg + (char) d;
                     }
-                    System.out.println(msg);
 
                     random = new Random(Long.parseLong(msg));
                     nextObj = Controller.makeRect(history, random);
 
                     if (msg.equals("Exit")) System.exit(0);
-                    System.out.println(msg);
                     break;
                 }
             } catch (IOException e) {
@@ -186,7 +184,6 @@ public class TetrisClient extends Application {
                             if (msg.equals("Exit")) System.exit(0);
                             else if (msg.startsWith("gg")) {
                                 msg = "Соперник\nзакончил:\n" + msg.substring(2);
-                                System.out.println(msg);
                                 rival.setText(msg);
                                 break;
                             } else {
@@ -730,7 +727,7 @@ public class TetrisClient extends Application {
     }
 
     @Override
-    public void stop(){
+    public void stop() {
         System.exit(0);
     }
 }

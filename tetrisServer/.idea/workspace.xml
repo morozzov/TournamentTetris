@@ -5,10 +5,10 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="dc5cea9a-d53d-4745-af67-69bbd01b4f9f" name="Changes" comment="">
-      <change beforePath="$PROJECT_DIR$/../tetrisClient/src/main/java/com/example/tetrisclient/TetrisClient.java" beforeDir="false" afterPath="$PROJECT_DIR$/../tetrisClient/src/main/java/com/example/tetrisclient/TetrisClient.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/executionHistory/executionHistory.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/7.4/fileHashes/fileHashes.lock" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/buildOutputCleanup/buildOutputCleanup.lock" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gradle/file-system.probe" beforeDir="false" afterPath="$PROJECT_DIR$/.gradle/file-system.probe" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Client.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Client.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/org/example/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/org/example/Main.java" afterDir="false" />
@@ -60,7 +60,8 @@
       <workItem from="1685690781114" duration="270000" />
       <workItem from="1685817924848" duration="265000" />
       <workItem from="1685818992149" duration="215000" />
-      <workItem from="1685910835396" duration="9927000" />
+      <workItem from="1685910835396" duration="10089000" />
+      <workItem from="1686069800925" duration="4756000" />
     </task>
     <servers />
   </component>
