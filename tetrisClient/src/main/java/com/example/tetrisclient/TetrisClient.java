@@ -78,7 +78,8 @@ public class TetrisClient extends Application {
         textInputDialog.setContentText("Никнейм:");
 
         Optional<String> nickName = textInputDialog.showAndWait();
-        outputStream.write((nickName.get() + "&").getBytes());
+        String nickNameString = nickName.get();
+        outputStream.write((nickNameString + "&").getBytes());
 
         while (true) {
             try {
@@ -144,7 +145,7 @@ public class TetrisClient extends Application {
         object = a;
         nextObj = Controller.makeRect(history, random);
         stage.setScene(scene);
-        stage.setTitle("Т Е Т Р И С");
+        stage.setTitle("Т Е Т Р И С (" + nickNameString + ")");
         stage.show();
 
 
